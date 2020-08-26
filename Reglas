@@ -1,4 +1,6 @@
 1. Una página nueva del draw.io es una página del menú.
-2. El elemento "concepto" (rectangulito) se traduce a texto en la aplicación final.
-3. Los atributos asignados al texto de elemento "concepto" se llevan tal cual a la aplicación final.
-prueba
+2. El elemento "relación" (rectángulo de borde redondeado) se traduce a texto en la aplicación final.
+3. Los atributos asignados al texto del elemento "relación" se llevan tal cual a la aplicación final.
+4. El elemento "concepto" (rectángulo) se traduce como una imagen en la aplicación final.
+5. Los atributos asignados a la imagen del elemento "concepto" se encuentran en el elemento rectángulo con línea punteada.
+6. El tamaño del canvas es igual al de una página (Tamaño carta = 8.5 in x 11 in)
