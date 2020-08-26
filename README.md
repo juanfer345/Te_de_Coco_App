@@ -7,7 +7,7 @@ Forma: Esquema Preconceptual en Draw.io -> XML -> Leer en Javascript -> Crear ap
 Integrantes:
 
 - Juan David Mejia Ardila
-- Juan David Ordoñes Noriega
+- Juan David Ordoñez Noriega
 - Sergio Andres Zambrano Gonzales
 - Esteban Rojas Henao
 - Juan Fernando Patiño Castro
