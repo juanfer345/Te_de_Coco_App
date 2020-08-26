@@ -8,7 +8,7 @@ Integrantes:
 
 - Juan David Mejia Ardila
 - Juan David Ordoñez Noriega
-- Sergio Andres Zambrano Gonzales
+- Sergio Andres Zambrano Gonzalez
 - Esteban Rojas Henao
 - Juan Fernando Patiño Castro
 - David Santiago Espindola Cavajal
