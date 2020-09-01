@@ -4,3 +4,6 @@
 4. El elemento "concepto" (rectángulo) se traduce como una imagen en la aplicación final.
 5. Los atributos asignados a la imagen del elemento "concepto" se encuentran en el elemento rectángulo con línea punteada.
 6. El tamaño del canvas es igual al de una página (Tamaño carta = 8.5 in x 11 in)
+7. Definir un evento inicial con el nombre "Inicializador"
+8. Las uniones entre los objetos se van a basar en la dirección desde donde se crea hasta donde va el objeto, no por el sentido de la flecha.
+9. En el modelo preconceptual no se van a incializar variables, solo a declarar
