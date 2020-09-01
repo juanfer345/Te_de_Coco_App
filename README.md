@@ -15,3 +15,9 @@ Integrantes:
 
 Paquetes a importar dentro del proyecto: 
 1. npm install xml2js --save
+
+Instalacion
+Instalar Node
+1. Clone Git
+2. Moverse a la carpeta base
+3. Ejecutar npm install
