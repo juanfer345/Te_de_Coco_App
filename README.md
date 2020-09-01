@@ -12,3 +12,6 @@ Integrantes:
 - Esteban Rojas Henao
 - Juan Fernando Patiño Castro
 - David Santiago Espindola Cavajal
+
+Paquetes a importar dentro del proyecto: 
+1. npm install xml2js --save
