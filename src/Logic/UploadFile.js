@@ -1,20 +1,19 @@
 import React from 'react';
-
-
-import {extractElemsOfDiagram} from "../Util/Parser";
+import {classifyElements} from "../Util/Parser";
 const parseXml2Json = require('xml2js').parseString;
 
-
-export const UploadFile = () => {
+export const UploadFile = ({onElementsParsed}) => {
+  const fileReader = new FileReader();
 
   const onFileChange = async (e) => {
     e.preventDefault();
-    const fileReader = new FileReader();
     fileReader.onload = (e) => {
       const uploadedFile = e.target.result;
       parseXml2Json(uploadedFile, (e, result) => {
         if(e){console.log(e.message); return;}
-        extractElemsOfDiagram(result.mxfile.diagram[0].mxGraphModel[0].root[0].mxCell);
+        classifyElements(result)
+          .then((result)=>onElementsParsed(result))
+          .catch((e)=>{})
       })
     }
     fileReader.readAsText(e.target.files[0]);

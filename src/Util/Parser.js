@@ -1,52 +1,43 @@
-export const extractElemsOfDiagram = (parsedXML) => {
-  if(parsedXML) {
-    const regexEvento = /\D*ellipse\W/;
-    const regexConcepto = /ded=0\W\w*\W\D/;
-    const regexRelEstruct = /ded=1\D*\d\;a/;
-    const regexRelDinamic =/1;\D*=1;dashed/;
-    const regexlogro = /\d\W\w{6}W/;
-    const relaciones = [];
+export const classifyElements = async (parsedXML) => {
+  return new Promise(((resolve, reject) => {
+    if(parsedXML) {
+      parsedXML = parsedXML.mxfile.diagram[0].mxGraphModel[0].root[0].mxCell;
+      const regexImg = /\wunded=0;w/
+      const regexStyle = /\wunded=0\S*\washed/
+      const regexTexto = /\wded=1/
 
-    parsedXML.forEach( element => {
-      element = element['$'];
-      if(element.id === '0' || element.id === '1'){
-        return null;
+      let elements = {
+        styles: [],
+        texts: [],
+        relations: [],
+        imgs: []
       }
-      else if(regexEvento.test(element.style)){
-        parsedXML[element.id].style='evento';
-        console.log("Se encontro un evento",element);
-      }
-      else if(regexConcepto.test(element.style)){
-        parsedXML[element.id].style='concepto';
-        console.log("Se encontro un concepto",element);
-      }
-      else if(regexlogro.test(element.style)){
-        parsedXML[element.id].style='logro';
-        console.log("Se encontro un logro",element);
-      }
-      else if(regexRelDinamic.test(element.style)){
-        parsedXML[element.id].style='relDinamica';
-        console.log("Se encontro una relacion dinamica",element);
-      }
-      else if(regexRelEstruct.test(element.style)){
-        parsedXML[element.id].style='relEstructural';
-        console.log("Se encontro una relacion estructural",element);
-      }
-      else{
-        console.log(element)
-        relaciones.push({
-          source:element.source,
-          target:element.target
-        });
-      }
-    });
-    console.log(relaciones)
-    relaciones.forEach(rel=>{
-      const source = rel.source;
-      const target = rel.target;
-      console.log('El/La "',
-        parsedXML[source].style,'" que contiene :"',parsedXML[source].$.value,'" esta unido mediante un/una "'+parsedXML[target].style,'" que contiene "',parsedXML[target].$.value,'"');
-    });
-  }
+      parsedXML.forEach( element => {
+        element = element['$'];
 
+        switch (element.id) {
+          case '0' :
+          case '1' :
+            return;
+          default:
+            const testString = element.style;
+            if (regexStyle.test(testString)) {
+              elements.styles.push(element)
+            } else if (regexTexto.test(testString)) {
+              elements.texts.push(element)
+            } else if (regexImg.test(testString)) {
+              elements.imgs.push(element)
+            } else { // dashed lines
+              elements.relations.push({
+                source: element.source,
+                target: element.target
+              })
+            }
+        }
+      })
+      resolve(elements)
+    } else {
+      reject('Error parsing XML')
+    }
+  }))
 }
