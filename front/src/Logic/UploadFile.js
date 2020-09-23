@@ -1,5 +1,5 @@
 import React from 'react';
-import {classifyElements} from "../Util/Parser";
+import {classifyElements} from "../Util/Clasificador";
 const parseXml2Json = require('xml2js').parseString;
 
 export const UploadFile = ({onElementsParsed}) => {

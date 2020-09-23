@@ -1,13 +1,13 @@
+
 export const parseCSS = (elements) => {
 
-  //css of texts
   const texts = elements.texts.map(text => {
     const styleStrings = text.style.split(';')
     const font = /font(Si|C|F)/
 
     const style = styleStrings
-      .filter(styleString => font.test(styleString))
-      .map(style => {
+      .filter(styleString => font.test(styleString)) // Solo estilos en regex
+      .map(style => { // mapearlos a una propiedad CSS
         let property = style.split('=')[0]
         let value = style.split('=')[1]
 
@@ -34,7 +34,7 @@ export const parseCSS = (elements) => {
     }
   })
 
-  //css of images
+
   const images = elements.imgs.map( img => {
     const styleStrings = img.content.split(';');
     const regexImgStyles = /(link|tama)/
@@ -71,6 +71,7 @@ export const parseCSS = (elements) => {
 
   return ({
     texts:texts,
-    images:images
+    images:images,
+    tamano:elements.tamano
   })
 }

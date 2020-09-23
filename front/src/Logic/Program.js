@@ -1,12 +1,13 @@
 import React from 'react'
 import {parseCSS} from "../Util/CSS";
 import {compiler} from "../Util/Compiler";
-import {generateComponents} from "../Util/Components";
+import {generarComponentes} from "../Util/Components";
 
 export const Program = ({elements}) => {
+  console.log(elements)
   return(
     <div>
-      {generateComponents(parseCSS(compiler(elements)))}
+      {generarComponentes(parseCSS(compiler(elements)))}
     </div>
   )
 }
