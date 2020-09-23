@@ -1,15 +1,7 @@
-/**
- * clasifica el resultado del parseo con
- * xml2js a elementos en Javascript
- * 
- * @param parsedXML
- * @return {Promise<unknown>}
- */
-
-export const classifyElements = async (parsedXML) => {
+export const classifyElements = async (archivoXML) => {
   return new Promise(((resolve, reject) => {
-    if(parsedXML) {
-      parsedXML = parsedXML.mxfile.diagram[0].mxGraphModel[0].root[0].mxCell;
+    if(archivoXML) {
+      archivoXML = archivoXML.mxfile.diagram[0].mxGraphModel[0].root[0].mxCell;
       const regexImg = /\wunded=0;w/
       const regexStyle = /\wunded=0\S*\washed/
       const regexTexto = /\wded=1/

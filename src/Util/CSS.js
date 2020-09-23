@@ -64,6 +64,11 @@ export const parseCSS = (elements) => {
     })
   })
 
+  console.log({
+    texts:texts,
+    images:images
+  })
+
   return ({
     texts:texts,
     images:images
