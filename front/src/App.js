@@ -16,13 +16,13 @@ export const App = () => {
     </div> 
   )
 
-  if(!elements){
+  if (!elements) {
     return jsxUploadElements;
   } 
   else {
     return (
       <div>
-        <Program elements={elements} />
+        <Program elements = {elements}/>
       </div>
     )
   }

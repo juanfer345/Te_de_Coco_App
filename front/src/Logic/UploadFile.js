@@ -6,14 +6,17 @@ export const UploadFile = ({onElementsParsed}) => {
   const fileReader = new FileReader();
 
   const onFileChange = async (e) => {
+
     e.preventDefault();
+
     fileReader.onload = (e) => {
       const uploadedFile = e.target.result;
       parseXml2Json(uploadedFile, (e, result) => {
-        if(e){console.log(e.message); return;}
+
+        if (e) {console.log(e.message); return;}
         classifyElements(result)
-          .then((result)=>onElementsParsed(result))
-          .catch((e)=>{})
+          .then((result) => onElementsParsed(result))
+          .catch((e) => {})
       })
     }
     fileReader.readAsText(e.target.files[0]);
@@ -21,18 +24,29 @@ export const UploadFile = ({onElementsParsed}) => {
 
   return (
     <div>
-      <h1>
-        Welcome
-      </h1>
-      <h3>
-        Sube tu diagrama preconceptual!
-      </h3>
-      <div>
-        <input
-          type="file"
-          onChange={onFileChange}
-          accept='text/xml'
-        />
+      <div style = 
+          {{
+            width: '60%',
+            marginTop:'20px',
+            marginLeft: 'auto',
+            marginRight: 'auto'
+          }}>
+        <h1 style = 
+          {{
+            textAlign: "center"
+          }}>
+          Bienvenido
+        </h1>
+        <h3>
+          Por favor, sube tu diagrama preconceptual!
+        </h3>
+        <div>
+          <input
+            type = "file"
+            onChange = {onFileChange}
+            accept = 'text/xml'
+          />
+        </div>
       </div>
     </div>
   );

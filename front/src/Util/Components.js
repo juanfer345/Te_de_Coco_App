@@ -7,10 +7,11 @@ export const generarComponentes = (styledElements) => {
   elements.sort((a,b) => a.id - b.id)
 
   const returnProperElement = (elem) => {
-    if (elem.text) { //text
-      return (<Text style={elem.style} text={elem.text}/>)
+    if (elem.text) { 
+      //text
+      return (<Text style = {elem.style} text = {elem.text}/>)
     }
-    else if(elem.style){
+    else if (elem.style) {
       const srcProperty = elem.style
         .filter(property => property.src)
         .map(property => property.src)
@@ -23,17 +24,17 @@ export const generarComponentes = (styledElements) => {
   }
 
   return (
-    <div >
+    <div>
       <div style = 
-      {{
-        width:parseInt(styledElements.tamano.pageWidth, 10), 
-        height:parseInt(styledElements.tamano.pageHeight,10),
-        border:'1px black solid', 
-        marginTop:'100px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginBottom: '100px'
-      }}>
+          {{
+            width: parseInt(styledElements.tamano.pageWidth, 10), 
+            height: parseInt(styledElements.tamano.pageHeight,  10),
+            border: '1px black solid', 
+            marginTop:'100px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginBottom: '100px'
+          }}>
         {elements.map(elem => returnProperElement(elem))}
       </div>
     </div>
