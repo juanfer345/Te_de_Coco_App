@@ -12,14 +12,14 @@ export const App = () => {
 
   const jsxUploadElements = (
     <div>
-      <UploadFile onElementsParsed={onElementsParsed}/>
-    </div> )
-
-
+      <UploadFile onElementsParsed = {onElementsParsed}/>
+    </div> 
+  )
 
   if(!elements){
     return jsxUploadElements;
-  } else {
+  } 
+  else {
     return (
       <div>
         <Program elements={elements} />
