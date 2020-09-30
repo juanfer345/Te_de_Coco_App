@@ -8,7 +8,8 @@
 
 export const classifyElements = async (parsedXML) => {
   return new Promise(((resolve, reject) => {
-    if(parsedXML) {
+    
+    if (parsedXML) {
       const tamano = {
         pageWidth : parsedXML.mxfile.diagram[0].mxGraphModel[0]['$'].pageWidth,
         pageHeight: parsedXML.mxfile.diagram[0].mxGraphModel[0]['$'].pageHeight
@@ -16,46 +17,49 @@ export const classifyElements = async (parsedXML) => {
 
       parsedXML = parsedXML.mxfile.diagram[0].mxGraphModel[0].root[0].mxCell;
 
+      const hashFood = "bx9oK9eBgwVI-gTDX1wS-2"
+      const hashRestaurante = "bx9oK9eBgwVI-gTDX1wS-21"
+
       const regexImg = /\wunded=0;w/
       const regexStyle = /\wunded=0\S*\washed/
       const regexTexto = /\wded=1/
       const regexBoton = /rhomb/
 
       let elements = {
-        styles: [],
-        texts: [],
-        relations: [],
-        botones: [],
-        imgs: [],
+        propiedadesComida: [], 
+        propiedadesTienda:[],
         tamano: tamano
-      }
+      };
+
+      var hashesFood = [];
+      var hashesTienda = [];
+
       parsedXML.forEach( element => {
         element = element['$'];
 
-        switch (element.id) {
-          case '0' :
-          case '1' :
-            return;
-          default:
-            const testString = element.style;
-            if (regexStyle.test(testString)) {
-              elements.styles.push(element)
-            } else if (regexTexto.test(testString)) {
-              elements.texts.push(element)
-            } else if (regexImg.test(testString)) {
-              elements.imgs.push(element)
-            } else if (regexBoton.test(testString)) {
-              elements.botones.push(element)
-            } else { // dashed lines
-              elements.relations.push({
-                source: element.source,
-                target: element.target
-              })
+        if (element.source == hashFood) {
+          hashesFood.push(element.target)
+
+          elements.propiedadesComida.push(parsedXML.find(elementB => {
+            if (elementB['$'].id == element.target){
+              return elementB['$'].value;
             }
+          })['$'].value);
+        }
+        else if (element.source == hashRestaurante) {
+          hashesTienda.push(element.target)
+
+          elements.propiedadesTienda.push(parsedXML.find(elementB => {
+            if (elementB['$'].id == element.target){
+              return elementB['$'].value;
+            }
+          })['$'].value);
         }
       })
+
       resolve(elements)
-    } else {
+    } 
+    else {
       reject('Error parsing XML')
     }
   }))
