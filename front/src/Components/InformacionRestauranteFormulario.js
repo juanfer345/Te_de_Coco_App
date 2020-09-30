@@ -15,17 +15,22 @@ export const InformacionRestauranteFormulario = ({campos, enFormularioTerminado}
   const camposInput = campos.map(campo => <InputInformacion campo={campo} enCampoCambiado={enCampoCambiado} />)
 
   return (
-    <div>
-      Formulario Informacion Restaurante
+    <div className='container'>
+      <div className='row'>
+        <div className='h2'>
+          Formulario Informacion Restaurante
+        </div>
+
+      </div>
       {camposInput}
-      <button
+      <a className='btn btn-primary'
         onClick={event => {
             event.preventDefault()
             enFormularioTerminado()
             agregarInformacion(informacion)
           }
         }
-      >Guardar Informacion</button>
+      >Guardar Informacion</a>
     </div>
   )
 }

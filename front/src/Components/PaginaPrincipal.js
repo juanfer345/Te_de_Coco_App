@@ -50,39 +50,82 @@ export const PaginaPrincipal = () => {
     setEstadoInformacion('cargando')
   }
 
+  const Propiedad = ({clave, valor}) => {
+    return (
+      <div className='col-12'>
+        <span className='font-weight-bolder'>
+          {clave}:
+        </span>
+        {valor}
+      </div>
+    )
+  }
   return (
     <div>
-      <div>
-        estado comidas: {estadoComidas}
-      </div>
-      <div>
-        estado informacion: {estadoInformacion}
-      </div>
-      admin
-      <button>
-        editar comidas
-      </button>
-      <div>
-        informacion restaurante
-        {(() => {
-          let string = ''
-          for (let propiedad in informacion){
-            string += propiedad + ':' + informacion[propiedad]
+      <nav className='navbar bg-dark'>
+
+          <div className='h3 text-light'>
+            admin
+          </div>
+          <a
+            className='btn btn-light'
+          >
+            Editar Comidas
+          </a>
+
+      </nav>
+
+        <div className='row'>
+          <div className='col-3 h4'>
+            Estado Comidas
+          </div>
+          <div className='col-3'>
+            {(estadoComidas==='cargando')?
+              <div className="spinner-border text-primary" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+              : <div>Cargado</div>}
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-3 h4'>
+            Estado Informacion
+          </div>
+          <div className='col-3'>
+            {(estadoInformacion==='cargando')?
+              <div className="spinner-border text-primary" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+              : <div>Cargado</div>}
+          </div>
+        </div>
+        <div className='border'>
+          <div className='h2 font-weight-bold'>
+            informacion restaurante
+          </div>
+          {(() => {
+            let propiedades = []
+            for (let propiedad in informacion){
+              propiedades.push(<Propiedad clave={propiedad} valor={informacion[propiedad]} /> )
+            }
+            return propiedades
+          })()
           }
-          return <div>{string}</div>
-        })()
-        }
+        </div>
+        <div>
+          <div className='h2 font-weight-bold'>
+            Listado de Comidas
+          </div>
+          {comidas.map(comida => {
+            let propiedades = []
+            for (let propiedad in comida){
+              propiedades.push(<Propiedad clave={propiedad} valor={comida[propiedad]} /> )
+            }
+            return <div claassName='border'>
+              {propiedades}
+            </div>
+          })}
+        </div>
       </div>
-      <div>
-        listado de comidas
-        {comidas.map(comida => {
-          let string = ''
-          for (let propiedad in comida){
-            string += propiedad + ':' + comida[propiedad]
-          }
-          return <div>{string}</div>
-        })}
-      </div>
-    </div>
   )
 }
