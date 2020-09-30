@@ -61,7 +61,7 @@ var controller={
 	},
 
 	/**
-	 *
+	 *get /food/:id?/:value?
 	 * @param req
 	 * @param resp
 	 * @return {this}
@@ -89,6 +89,13 @@ var controller={
 			return resp.status(200).send({food: foodReturn});
 		});
 	},
+	/**
+	 *get /foods
+	 *
+	 * @param req
+	 * @param resp
+	 * @return {this}
+	 */
 	getFoods: function(req, resp){
 		let Food= mongoose.model('foods',FoodtSchema);
 		Food.find({}).exec((error,foodReturn)=>{
@@ -122,6 +129,14 @@ var controller={
 			return resp.status(200).send({foodUpdate});
 		});
 	},
+
+	/**
+	 * '/food/:id?/:value?'
+	 * 
+	 * @param req
+	 * @param resp
+	 * @return {this}
+	 */
 	deleteFood: function(req, resp){
 		let Food = mongoose.model('foods',FoodtSchema);
 		let foodId=req.params.id;
