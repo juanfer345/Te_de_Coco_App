@@ -14,14 +14,13 @@ export const PaginaPrincipal = () => {
   let [estadoComidas, setEstadoComidas] = useState('vacio') // estado en el que se encuentra la carga de las comidas
   let [estadoInformacion, setEstadoInformacion] = useState('vacio') // estado en el que se encuentra la carga de la informacion del restaurante
 
-
   /*
    * Funciones que empiezan a cargar los datos
    * del servidor una vez se carga esta pagina
    */
   const cargarComidas = async () => {
     let comidasCargadas
-    try{
+    try {
        comidasCargadas = await obtenerPlatos()
     } catch (e) {
       setEstadoComidas('error')
@@ -32,7 +31,7 @@ export const PaginaPrincipal = () => {
 
   const cargarPropiedades = async () => {
     let propiedadesCargadas
-    try{
+    try {
       propiedadesCargadas = await obtenerInformacion()
     } catch (e) {
       setEstadoInformacion('error')
@@ -41,11 +40,11 @@ export const PaginaPrincipal = () => {
     setEstadoInformacion('cargado')
   }
 
-  if(estadoComidas === 'vacio'){
+  if (estadoComidas === 'vacio'){
     cargarComidas()
     setEstadoComidas('cargando')
   }
-  if(estadoInformacion === 'vacio'){
+  if (estadoInformacion === 'vacio'){
     cargarPropiedades()
     setEstadoInformacion('cargando')
   }

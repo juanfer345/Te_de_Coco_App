@@ -3,26 +3,28 @@ import {AgregarComidaFormulario} from "./AgregarComidaFormulario";
 import {InformacionRestauranteFormulario} from "./InformacionRestauranteFormulario";
 
 export const ContenedorFormularios = ({propiedadesComida, propiedadesRestaurante, enFormulariosTerminados}) => {
-  let [formularioRestauranteTerminado, setFormularioRestauranteTermiando] = useState(false) //
+  let [formularioRestauranteTerminado, setFormularioRestauranteTerminado] = useState(false) //
   let [formularioComidaTerminado, setFormularioComidaTermiando] = useState(false) //
 
   const enFormularioRestauranteTerminado = () => {
-    setFormularioRestauranteTermiando(true)
+    setFormularioRestauranteTerminado(true)
   }
 
   const enFormularioComidaTerminado = () => {
     setFormularioComidaTermiando(true)
   }
 
-  if(formularioRestauranteTerminado && formularioComidaTerminado){
+  if (formularioRestauranteTerminado && formularioComidaTerminado) {
     enFormulariosTerminados()
   }
 
-  if(!formularioRestauranteTerminado){
-    return <InformacionRestauranteFormulario campos={propiedadesRestaurante} enFormularioTerminado={enFormularioRestauranteTerminado} />
-  } else if (!formularioComidaTerminado){
-    return <AgregarComidaFormulario campos={propiedadesComida} terminarFormulariosComida={enFormularioComidaTerminado} />
-  } else {
+  if (!formularioRestauranteTerminado) {
+    return <InformacionRestauranteFormulario campos = {propiedadesRestaurante} enFormularioTerminado = {enFormularioRestauranteTerminado} />
+  } 
+  else if (!formularioComidaTerminado){
+    return <AgregarComidaFormulario campos = {propiedadesComida} terminarFormulariosComida = {enFormularioComidaTerminado} />
+  } 
+  else {
     return <div>Cargando ...</div>
   }
   return (

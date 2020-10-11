@@ -27,9 +27,9 @@ export const App = () => {
   }
   else if (!formulariosTerminados) {
     return <ContenedorFormularios
-      propiedadesComida={elements.propiedadesComida}
-      propiedadesRestaurante={elements.propiedadesTienda}
-      enFormulariosTerminados={enFormulariosTerminados}
+      propiedadesComida = {elements.propiedadesComida}
+      propiedadesRestaurante = {elements.propiedadesTienda}
+      enFormulariosTerminados = {enFormulariosTerminados}
     />
   } else {
     return <PaginaPrincipal />

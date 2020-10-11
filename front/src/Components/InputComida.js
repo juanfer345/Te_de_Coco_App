@@ -18,14 +18,14 @@ export const InputComida = ({nombre, enCampoCambiado, numeroFormulario}) => {
   return (
     <div>
       <label
-        htmlFor={nombre}
+        htmlFor = {nombre}
       >
         {nombre}
       </label>
       <input
-        id={nombre}
-        value={valor}
-        onChange={enValorCambiado}
+        id = {nombre}
+        value = {valor}
+        onChange = {enValorCambiado}
       />
     </div>
   )

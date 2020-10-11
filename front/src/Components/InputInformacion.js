@@ -5,13 +5,13 @@ export const InputInformacion = ({campo, enCampoCambiado}) => {
   return (
     <div>
       <label
-        htmlFor={campo}
+        htmlFor = {campo}
       >
         {campo}
       </label>
       <input
-        id={campo}
-        onChange={event => {
+        id = {campo}
+        onChange = {event => {
             event.preventDefault();
             enCampoCambiado(campo, event.target.value)
           }
