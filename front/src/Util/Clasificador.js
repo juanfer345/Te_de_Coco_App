@@ -8,17 +8,14 @@
 
 export const classifyElements = async (parsedXML) => {
   return new Promise(((resolve, reject) => {
-    
+
     if (parsedXML) {
       const tamano = {
-        pageWidth : parsedXML.mxfile.diagram[0].mxGraphModel[0]['$'].pageWidth,
+        pageWidth: parsedXML.mxfile.diagram[0].mxGraphModel[0]['$'].pageWidth,
         pageHeight: parsedXML.mxfile.diagram[0].mxGraphModel[0]['$'].pageHeight
       }
 
       parsedXML = parsedXML.mxfile.diagram[0].mxGraphModel[0].root[0].mxCell;
-
-      const hashFood = "bx9oK9eBgwVI-gTDX1wS-2"
-      const hashRestaurante = "bx9oK9eBgwVI-gTDX1wS-21"
 
       const regexImg = /\wunded=0;w/
       const regexStyle = /\wunded=0\S*\washed/
@@ -26,39 +23,46 @@ export const classifyElements = async (parsedXML) => {
       const regexBoton = /rhomb/
 
       let elements = {
-        propiedadesComida: [], 
-        propiedadesTienda:[],
+        propiedadesComida: [],
+        propiedadesTienda: [],
         tamano: tamano
       };
+      var hashesConceptos = [];
+      //const conceptosPermitidosComida = ['Categoria', 'Nombre', 'Precio', 'Descripcion', 'Foto'];
 
-      var hashesFood = [];
-      var hashesTienda = [];
-
-      parsedXML.forEach( element => {
+      parsedXML.forEach(element => {
         element = element['$'];
+        var auxiliar = [];
 
-        if (element.source == hashFood) {
-          hashesFood.push(element.target)
-
-          elements.propiedadesComida.push(parsedXML.find(elementB => {
-            if (elementB['$'].id == element.target){
-              return elementB['$'].value;
+        if (element.value == 'Tiene') {
+          var hashTiene = element.id;
+          parsedXML.find(sourceTarget => {
+            if (sourceTarget['$'].target == hashTiene) {
+              hashesConceptos.push(sourceTarget['$'].source);
             }
-          })['$'].value);
-        }
-        else if (element.source == hashRestaurante) {
-          hashesTienda.push(element.target)
-
-          elements.propiedadesTienda.push(parsedXML.find(elementB => {
-            if (elementB['$'].id == element.target){
-              return elementB['$'].value;
+            else if (sourceTarget['$'].source == hashTiene) {
+              hashesConceptos.push(sourceTarget['$'].target);
             }
-          })['$'].value);
+          })
+
+          for (let index = 0; index < hashesConceptos.length; index++) {
+            auxiliar.push(parsedXML.find(elementB => {
+              return elementB['$'].id == hashesConceptos[index];
+            })['$'].value)
+          }
+
+          if (auxiliar.includes('Comida')) {
+            elements.propiedadesComida.push(auxiliar.filter((elemento) => elemento != 'Comida'));
+          }
+          else if (auxiliar.includes('Propiedades de restaurante')) {
+            elements.propiedadesTienda.push(auxiliar.filter((elemento) => elemento != 'Propiedades de restaurante'));
+          }
+
+          auxiliar = []; hashesConceptos = [];
         }
       })
-
-      resolve(elements)
-    } 
+      resolve(elements);
+    }
     else {
       reject('Error parsing XML')
     }

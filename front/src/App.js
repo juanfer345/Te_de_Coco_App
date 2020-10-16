@@ -32,7 +32,7 @@ export const App = () => {
       enFormulariosTerminados = {enFormulariosTerminados}
     />
   } else {
-    return <PaginaPrincipal />
+    return <PaginaPrincipal elementos = {elements}/>
   }
 }
 
