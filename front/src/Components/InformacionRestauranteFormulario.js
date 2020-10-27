@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {InputInformacion} from "./InputInformacion";
 import {agregarInformacion} from "../Util/Conexion";
 
+
 export const InformacionRestauranteFormulario = ({campos, enFormularioTerminado}) => {
   let [informacion, setInformacion] = useState({})
 
@@ -11,20 +12,25 @@ export const InformacionRestauranteFormulario = ({campos, enFormularioTerminado}
     setInformacion(Object.assign(informacion, propiedad))
   }
 
-  const camposInput = campos.map(campo => <InputInformacion campo = {campo} enCampoCambiado = {enCampoCambiado} />)
+  const camposInput = campos.map(campo => <InputInformacion campo={campo} enCampoCambiado={enCampoCambiado} />)
 
   return (
-    <div>
-      Formulario Informacion Restaurante
+    <div className='container'>
+      <div className='row'>
+        <div className='h2'>
+          Formulario Informacion Restaurante
+        </div>
+
+      </div>
       {camposInput}
-      <button
-        onClick = {event => {
+      <a className='btn btn-primary'
+        onClick={event => {
             event.preventDefault()
             enFormularioTerminado()
             agregarInformacion(informacion)
           }
         }
-      > Guardar Información </button>
+      >Guardar Informacion</a>
     </div>
   )
 }

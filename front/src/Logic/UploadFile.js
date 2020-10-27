@@ -23,29 +23,37 @@ export const UploadFile = ({onElementsParsed}) => {
   };
 
   return (
-    <div>
-      <div style = 
-          {{
-            width: '60%',
-            marginTop:'20px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}>
-        <h1 style = 
-          {{
-            textAlign: "center"
-          }}>
-          Bienvenido
-        </h1>
-        <h3>
-          Por favor, sube tu diagrama preconceptual!
-        </h3>
-        <div>
-          <input
-            type = "file"
-            onChange = {onFileChange}
-            accept = 'text/xml'
-          />
+    <div className='container'>
+      <div className='container mt-5 align-self-center'>
+        <div className='container-fluid'>
+          <div className='row d-flex justify-content-center'>
+            <div className='h1 '>
+              Bienvenido
+            </div>
+          </div>
+        </div>
+        <div className='container-fluid mt-3'>
+          <div className='row d-flex justify-content-center'>
+            <div className='h3'>
+              Por favor, sube tu diagrama
+            </div>
+          </div>
+        </div>
+        <div className='container-fluid'>
+          <div className='row d-flex justify-content-center'>
+            <div>
+              <label className='btn btn-primary' htmlFor='subirArchivo'>
+                Seleccionar Archivo
+                <input
+                  id='subirArchivo'
+                  className='d-none'
+                  type="file"
+                  onChange={onFileChange}
+                  accept='text/xml'
+                />
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
