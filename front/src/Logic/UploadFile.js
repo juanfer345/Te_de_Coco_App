@@ -35,7 +35,7 @@ export const UploadFile = ({onElementsParsed}) => {
         <div className='container-fluid mt-3'>
           <div className='row d-flex justify-content-center'>
             <div className='h3'>
-              Por favor, sube tu diagrama
+              Por favor, sube tu esquema
             </div>
           </div>
         </div>
