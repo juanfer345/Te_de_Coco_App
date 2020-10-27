@@ -38,7 +38,7 @@ export const UploadFile = ({onElementsParsed}) => {
           Bienvenido
         </h1>
         <h3>
-          Por favor, sube tu diagrama preconceptual!
+          Por favor, sube tu esquema preconceptual!
         </h3>
         <div>
           <input
