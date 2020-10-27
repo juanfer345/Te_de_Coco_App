@@ -6,6 +6,8 @@ import {PaginaPrincipal} from "./Components/PaginaPrincipal";
 export const App = () => {
   const [elements, setElements] = useState(null)
   const [formulariosTerminados, setFormulariosTerminados] = useState(false)
+  
+
 
   const onElementsParsed = (elements) => {
     setElements(elements)

@@ -12,7 +12,7 @@ export const InformacionRestauranteFormulario = ({campos, enFormularioTerminado}
     setInformacion(Object.assign(informacion, propiedad))
   }
 
-  const camposInput = campos.map(campo => <InputInformacion campo={campo} enCampoCambiado={enCampoCambiado} />)
+  const camposInput = campos[0].map(campo => <InputInformacion campo={campo} enCampoCambiado={enCampoCambiado} />)
 
   return (
     <div className='container'>

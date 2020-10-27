@@ -18,7 +18,7 @@ export const AgregarComidaFormulario = ({campos, terminarFormulariosComida}) => 
     agregarPlato(comida)
     setNumeroFormulario(++numeroFormulario)
   }
-  const componenteCampos = campos.map(campo => <InputComida nombre={campo} enCampoCambiado={enCampoCambiado} numeroFormulario={numeroFormulario} /> )
+  const componenteCampos = campos[0].map(campo => <InputComida nombre={campo} enCampoCambiado={enCampoCambiado} numeroFormulario={numeroFormulario} /> )
 
   return (
     <div className='container'>
