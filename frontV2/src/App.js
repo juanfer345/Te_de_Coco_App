@@ -191,7 +191,7 @@ class App extends Component {
       <p>File Type: {this.state.selectedFile.type}</p> 
       <p> 
       Last Modified:{" "} 
-      {this.state.selectedFile.lastModifiedDate.toDateString()} 
+      {/*{this.state.selectedFile.lastModifiedDate.toDateString()} */}
       </p> 
     </div> 
     ); 

@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import { obtenerInformacion, obtenerPlatos } from "../Util/Conexion";
-import Draggable from 'react-draggable';
+import React, {useState} from 'react'
+import {obtenerInformacion, obtenerPlatos} from "../Util/Conexion";
 
 /**
  * @author Juan David Mejia Ardila
@@ -9,11 +8,12 @@ import Draggable from 'react-draggable';
  * @return {JSX.Element}
  * @constructor
  */
-export const PaginaPrincipal = ({ elementos }) => {
+export const PaginaPrincipal = () => {
   let [comidas, setComidas] = useState([]) //array de comidas en el servidor
   let [informacion, setInformacion] = useState({}) //array de
   let [estadoComidas, setEstadoComidas] = useState('vacio') // estado en el que se encuentra la carga de las comidas
   let [estadoInformacion, setEstadoInformacion] = useState('vacio') // estado en el que se encuentra la carga de la informacion del restaurante
+
 
   /*
    * Funciones que empiezan a cargar los datos
@@ -21,8 +21,8 @@ export const PaginaPrincipal = ({ elementos }) => {
    */
   const cargarComidas = async () => {
     let comidasCargadas
-    try {
-      comidasCargadas = await obtenerPlatos()
+    try{
+       comidasCargadas = await obtenerPlatos()
     } catch (e) {
       setEstadoComidas('error')
     }
@@ -32,7 +32,7 @@ export const PaginaPrincipal = ({ elementos }) => {
 
   const cargarPropiedades = async () => {
     let propiedadesCargadas
-    try {
+    try{
       propiedadesCargadas = await obtenerInformacion()
     } catch (e) {
       setEstadoInformacion('error')
@@ -41,107 +41,91 @@ export const PaginaPrincipal = ({ elementos }) => {
     setEstadoInformacion('cargado')
   }
 
-  if (estadoComidas === 'vacio') {
+  if(estadoComidas === 'vacio'){
     cargarComidas()
     setEstadoComidas('cargando')
   }
-  if (estadoInformacion === 'vacio') {
+  if(estadoInformacion === 'vacio'){
     cargarPropiedades()
     setEstadoInformacion('cargando')
   }
 
-  // const returnProperElement = (elem) => {
-  //   if (elem.text) { 
-  //     //text
-  //     return (<Text style = {elem.style} text = {elem.text}/>)
-  //   }
-  //   else if (elem.style) {
-  //     const srcProperty = elem.style
-  //       .filter(property => property.src)
-  //       .map(property => property.src)
-
-  //     const sizeProperty = elem.style
-  //       .filter(property => property.size)
-  //       .map(property => property.size)
-  //     return (<Image src = {srcProperty} style = {sizeProperty[0]}/>)
-  //   }
-  // }
-
-  // const reptiles = ["alligator", "snake", "lizard"];
-
-
-  // return reptiles.map((reptile) => <Draggable><div>{reptile}</div></Draggable>);
-
-  var vect = [];
-  for (let propiedad in informacion) {
-    if (propiedad != "_id" && propiedad != "__v") {
-      vect.push(informacion[propiedad]);
-    }
+  const Propiedad = ({clave, valor}) => {
+    return (
+      <div className='col-12'>
+        <span className='font-weight-bolder'>
+          {clave}:
+        </span>
+        {valor}
+      </div>
+    )
   }
-
-  //style={{cursor: "pointer"}}
-  vect = vect.map((hola) => <Draggable><div style={{cursor: "pointer"}}>{hola}</div></Draggable>);
-  
   return (
+    <div>
+      <nav className='navbar bg-dark'>
 
-    <div style=
-      {{
-        width: parseInt(elementos.tamano.pageWidth, 10),
-        height: parseInt(elementos.tamano.pageHeight, 10),
-        border: '1px black solid',
-        marginTop: '100px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginBottom: '100px'
-      }}>
-      
-      {vect}
+          <div className='h3 text-light'>
+            admin
+          </div>
+          <a
+            className='btn btn-light'
+          >
+            Editar Comidas
+          </a>
 
-      {/* 
-      {people.filter(person => person.age < 60).map(filteredPerson => (
-        <li>
-          {filteredPerson.name}
-        </li>
-      ))} */}
+      </nav>
 
-      {/* {(() => {
-          // let string = ''
-          let vect = [];
-          //  var counter = 0;
-          for (let propiedad in informacion) {
-            // string += propiedad + ':' + informacion[propiedad]
-            if (propiedad != "_id" && propiedad != "__v") {
-              vect.push( <div> {informacion[propiedad]} </div>);
-              // asignarArrastracion(vect[counter]);
-              // counter++;
+        <div className='row'>
+          <div className='col-3 h4'>
+            Estado Comidas
+          </div>
+          <div className='col-3'>
+            {(estadoComidas==='cargando')?
+              <div className="spinner-border text-primary" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+              : <div>Cargado</div>}
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-3 h4'>
+            Estado Informacion
+          </div>
+          <div className='col-3'>
+            {(estadoInformacion==='cargando')?
+              <div className="spinner-border text-primary" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+              : <div>Cargado</div>}
+          </div>
+        </div>
+        <div className='border'>
+          <div className='h2 font-weight-bold'>
+            informacion restaurante
+          </div>
+          {(() => {
+            let propiedades = []
+            for (let propiedad in informacion){
+              propiedades.push(<Propiedad clave={propiedad} valor={informacion[propiedad]} /> )
             }
+            return propiedades
+          })()
           }
-          return vect;
-        })()
-        } */}
-
-    </div>
-
-    //    <div>
-    //      estado comidas: {estadoComidas}
-    //    </div>
-    //    <div>
-    //      estado informacion: {estadoInformacion}
-    //    </div>
-    //    admin
-    //    <button>
-    //      editar comidas
-    //    </button>
-    //     { informacion restaurante}
-    //    <div>
-    //      listado de comidas
-    //      {comidas.map(comida => {
-    //       let string = ''
-    //       for (let propiedad in comida){
-    //         string += propiedad + ':' + comida[propiedad]
-    //       }
-    //       return <div>{string}</div>
-    //     })}
-    //   </div>
+        </div>
+        <div>
+          <div className='h2 font-weight-bold'>
+            Listado de Comidas
+          </div>
+          {comidas.map(comida => {
+            let propiedades = []
+            for (let propiedad in comida){
+              propiedades.push(<Propiedad clave={propiedad} valor={comida[propiedad]} /> )
+            }
+            return <div claassName='border'>
+              {propiedades}
+            </div>
+          })}
+        </div>
+      </div>
   )
 }

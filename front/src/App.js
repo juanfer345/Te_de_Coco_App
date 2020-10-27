@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import './App.css';
 import {UploadFile} from "./Logic/UploadFile";
 import {Program} from './Logic/Program';
 import {ContenedorFormularios} from './Components/ContenedorFormularios'
@@ -7,6 +6,8 @@ import {PaginaPrincipal} from "./Components/PaginaPrincipal";
 export const App = () => {
   const [elements, setElements] = useState(null)
   const [formulariosTerminados, setFormulariosTerminados] = useState(false)
+  
+
 
   const onElementsParsed = (elements) => {
     setElements(elements)
@@ -21,6 +22,12 @@ export const App = () => {
       <UploadFile onElementsParsed = {onElementsParsed}/>
     </div> 
   )
+  // debug
+  // return <ContenedorFormularios
+  //   propiedadesComida={['1234']}
+  //   propiedadesRestaurante={['1234']}
+  //   enFormulariosTerminados={enFormulariosTerminados}
+  // />
 
   if (!elements) {
     return jsxUploadElements;

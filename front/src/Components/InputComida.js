@@ -16,17 +16,19 @@ export const InputComida = ({nombre, enCampoCambiado, numeroFormulario}) => {
   }
 
   return (
-    <div>
-      <label
-        htmlFor = {nombre}
-      >
-        {nombre}
-      </label>
-      <input
-        id = {nombre}
-        value = {valor}
-        onChange = {enValorCambiado}
-      />
+    <div className='row'>
+      <div className="input-group mb-3">
+        <div className="input-group-prepend">
+          <span className="input-group-text">{nombre}</span>
+        </div>
+        <input
+          type='text'
+          className="form-control"
+          id={nombre}
+          value={valor}
+          onChange={enValorCambiado}
+        />
+      </div>
     </div>
   )
 }

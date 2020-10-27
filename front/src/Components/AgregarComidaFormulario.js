@@ -6,6 +6,7 @@ export const AgregarComidaFormulario = ({campos, terminarFormulariosComida}) => 
   let [comida, setComida] = useState({})
   let [numeroFormulario, setNumeroFormulario] = useState(1)
 
+
   const enCampoCambiado = (campo, valor) => {
     let propiedad = {}
     propiedad[campo] = valor
@@ -17,16 +18,25 @@ export const AgregarComidaFormulario = ({campos, terminarFormulariosComida}) => 
     agregarPlato(comida)
     setNumeroFormulario(++numeroFormulario)
   }
-  const componenteCampos = campos.map(campo => <InputComida nombre={campo} enCampoCambiado={enCampoCambiado} numeroFormulario={numeroFormulario} /> )
+  const componenteCampos = campos[0].map(campo => <InputComida nombre={campo} enCampoCambiado={enCampoCambiado} numeroFormulario={numeroFormulario} /> )
 
   return (
-    <div>
-      Formulario Campos
+    <div className='container'>
+      <div className='row'>
+        <div className='h2'>
+          Formulario Informacion de un Plato
+        </div>
+
+      </div>
       <div>
         {componenteCampos}
       </div>
-      <button onClick = {enAgregarClick}> Agregar </button>
-      <button onClick = {terminarFormulariosComida}> Terminar </button>
+      <a
+        className='btn btn-primary mr-5'
+        onClick={enAgregarClick}>Agregar</a>
+      <a
+        className='btn btn-primary'
+        onClick={terminarFormulariosComida}>Terminar</a>
     </div>
   )
 }
