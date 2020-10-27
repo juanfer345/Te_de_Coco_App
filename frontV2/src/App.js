@@ -39,7 +39,7 @@ class App extends Component {
           }
           else if(regexActor.test(obj.$.style)){
             diagram[obj.$.id].$.style='actor';
-            //console.log("Se encontro un actor",obj.$);
+            console.log("Se encontro un actor",obj.$.value);
           }
           else if (regexRelDinamic.test(obj.$.style)) {
             diagram[obj.$.id].$.style='relDinamica';
