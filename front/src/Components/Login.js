@@ -1,34 +1,7 @@
-import React, {useEffect, useState} from 'react'
-import axios from 'axios'
+import React from 'react'
 
-export const Login = ({setEstadoPadre, usuarios, enUsuarioSeleccionado}) => {
-  const [estado, setEstado] = useState('creado')
 
-  /**
-   * Fetches the users avaiable for an application code
-   * @param code
-   * @return {Promise<unknown>}
-   */
-  const cargarUsuarios = (code) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(()=>{
-        if(usuarios)
-          resolve()
-        reject()
-      },500)
-    });
-  }
-
-  useEffect(() => {
-    if(estado === 'creado' ){
-      setEstado('cargando')
-      cargarUsuarios()
-         .then(users => {setEstado('completado')})
-         .catch(error => {setEstado('error')})
-    }
-    if(estado === 'error')
-      setEstadoPadre('subirDiagrama')
-  });
+export const Login = ({usuarios, enUsuarioSeleccionado, codigo}) => {
 
   const Usuario = ({nombre}) => {
     return (
@@ -68,27 +41,29 @@ export const Login = ({setEstadoPadre, usuarios, enUsuarioSeleccionado}) => {
     )
   }
 
-  switch (estado){
-    case "creado":
-      return (<></>)
-    case 'cargando':
-      return <Page body={<div className="spinner-border text-light" role="status">
-        <span className="sr-only">Loading...</span>
-      </div>} />
-    case 'error':
-      return <Page body={<div>No hay usuarios cargados para este diagrama</div>} />
-    case 'completado':
-      return  <Page body={
-        <>
-          <div className='col-12 bg-light card'>
-            Link para compartir:
-          </div>
+  const linkCompartir = () => {
+    if(codigo){
+      return document.location.toString() + codigo
+    } else {
+      return document.location.toString()
+    }
+  }
 
-          {usuarios.map(usuairo => <Usuario nombre={usuairo} /> )}
-        </>
+  if(usuarios){
+    return  <Page body={
+      <>
+        <div className='col-12 bg-light card'>
+          Link para compartir:
+          <a href={linkCompartir()}>
+            {linkCompartir()}
+          </a>
+        </div>
 
-      } />
-    default:
-      return <div>error</div>
+        {usuarios.map(usuairo => <Usuario nombre={usuairo} /> )}
+      </>
+    } />
+  } else {
+    return <Page body={<div>No hay usuarios cargados para este diagrama</div>} />
+
   }
 }

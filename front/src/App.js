@@ -1,23 +1,22 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {UploadFile} from "./Logic/UploadFile";
-import {Program} from './Logic/Program';
-import {ContenedorFormularios} from './Components/ContenedorFormularios'
-import {PaginaPrincipal} from "./Components/PaginaPrincipal";
 import {Login} from "./Components/Login";
 import {Conceptos} from "./Components/Conceptos";
 import {InsertarConcepto} from "./Components/InsertarConcepto";
 import {VerConcepto} from "./Components/verConcepto";
+import {guardarAplicativo, obtenerAplicativo} from "./Util/Conexion";
 export const App = () => {
-  const [estado, setEstado] = useState('login')
+  const [estado, setEstado] = useState('ready')
   const [usuarios, setUsuarios] = useState(null)
   const [usuario, setUsuario] = useState(null)
   const [concepto, setConcepto] = useState(null)
   const [conceptos, setConceptos] = useState(null)
+  const [codigo, setCodigo] = useState(null)
 
-
-  const onElementsParsed = async (elements) => {
-    setConceptos(elements)
-    setUsuarios(elements.map(concepto => Object.keys(concepto.permisos))
+  const cargarAplicativo = (conceptos, setConceptos, setUsuarios) => {
+    setConceptos(conceptos)
+    console.log(conceptos)
+    setUsuarios(conceptos.map(concepto => Object.keys(concepto.permisos))
       .reduce((current, prev) => {
         current.forEach(value => {
           if(!prev.includes(value)){
@@ -26,6 +25,13 @@ export const App = () => {
         })
         return prev
       }, []))
+  }
+
+  const onElementsParsed = async (elements) => {
+    cargarAplicativo(elements, setConceptos, setUsuarios)
+    const temp = Number.parseInt(Math.random()*5000)
+    setCodigo(temp)
+    guardarAplicativo(elements, temp)
     setEstado('login')
   }
 
@@ -34,10 +40,30 @@ export const App = () => {
     setEstado('conceptos')
   }
 
+  useEffect(() => {
+    if(estado === 'ready'){
+      const codigo = document.location.toString().split('/')[3]
+      if (codigo)
+        obtenerAplicativo(codigo)
+          .then(aplicativo => {
+            let keys = Object.keys(aplicativo[0]).filter(key => Number.isInteger(parseInt(key)))
+            let elements = keys.map(key => aplicativo[0][key])
+            console.log(elements)
+            cargarAplicativo(elements, setConceptos, setUsuarios);
+            setEstado('login');
+          })
+          .catch(()=> setEstado('subirDiagrama'))
+      else
+        setEstado('subirDiagrama')
+    }
+  })
+
   switch (estado){
+    case 'ready':
+      return <></>
     case "login":
       //TODO usuarios son cargados desde la api si el aplicativo ya se ha creado
-      return <Login setEstadoPadre={setEstado} usuarios={usuarios} enUsuarioSeleccionado={onUsuarioSelected} />
+      return <Login setEstadoPadre={setEstado} usuarios={usuarios} enUsuarioSeleccionado={onUsuarioSelected} codigo={codigo} />
     case 'subirDiagrama':
       // if(conceptos){setEstado('login');break;}
       return <UploadFile onElementsParsed = {onElementsParsed}/>
