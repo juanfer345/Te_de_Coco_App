@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 
-export const Login = ({setEstadoPadre, usuarios}) => {
+export const Login = ({setEstadoPadre, usuarios, enUsuarioSeleccionado}) => {
   const [estado, setEstado] = useState('creado')
 
   /**
@@ -15,7 +15,7 @@ export const Login = ({setEstadoPadre, usuarios}) => {
         if(usuarios)
           resolve()
         reject()
-      },2000)
+      },500)
     });
   }
 
@@ -30,27 +30,39 @@ export const Login = ({setEstadoPadre, usuarios}) => {
       setEstadoPadre('subirDiagrama')
   });
 
-  const Usuario = ({nombre, enUsuarioOprimido}) => {
+  const Usuario = ({nombre}) => {
     return (
-      <div className='col-6 border justify-content-center d-flex'>
-        <div>
-          {nombre}
-        </div>
-        <div
-          type='button'
+      <div className='col-6 justify-content-center d-flex p-5'>
+        <div className='card w-100 h-100' >
+          <div className='card-header'>
+            {nombre}
+          </div>
+          <div className='card-body'>
+            <div
+              type='button'
+              className='btn btn-primary'
+              onClick={(event)=> {
+                event.preventDefault()
+                enUsuarioSeleccionado(nombre)
+              }}
+            >
+              Entrar
+            </div>
+          </div>
 
-        >
-          Entrar
         </div>
       </div>
+
     )
   }
 
   const Page = ({body}) => {
     return (
-      <div className='container'>
-        <div className='row vh-100 align-content-center justify-content-center d-flex '>
-          {body}
+      <div className='bg-dark'>
+        <div className='container'>
+          <div className='row vh-100 align-content-center justify-content-center d-flex '>
+            {body}
+          </div>
         </div>
       </div>
     )
@@ -60,11 +72,22 @@ export const Login = ({setEstadoPadre, usuarios}) => {
     case "creado":
       return (<></>)
     case 'cargando':
-      return <Page body={<div>Cargando...</div>} />
+      return <Page body={<div className="spinner-border text-light" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>} />
     case 'error':
       return <Page body={<div>No hay usuarios cargados para este diagrama</div>} />
     case 'completado':
-      return  <Page body={usuarios.map(usuairo => <Usuario nombre={usuairo} /> )} />
+      return  <Page body={
+        <>
+          <div className='col-12 bg-light card'>
+            Link para compartir:
+          </div>
+
+          {usuarios.map(usuairo => <Usuario nombre={usuairo} /> )}
+        </>
+
+      } />
     default:
       return <div>error</div>
   }
