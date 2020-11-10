@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {UploadFile} from "./Logic/UploadFile";
-import {Login} from "./Components/Login";
-import {Conceptos} from "./Components/Conceptos";
-import {InsertarConcepto} from "./Components/InsertarConcepto";
-import {VerConcepto} from "./Components/verConcepto";
-import {guardarAplicativo, obtenerAplicativo} from "./Util/Conexion";
+import React, { useEffect, useState } from 'react';
+import { UploadFile } from "./Logic/UploadFile";
+import { Login } from "./Components/Login";
+import { Conceptos } from "./Components/Conceptos";
+import { InsertarConcepto } from "./Components/InsertarConcepto";
+import { VerConcepto } from "./Components/verConcepto";
+import { guardarAplicativo, obtenerAplicativo } from "./Util/Conexion";
+
 export const App = () => {
   const [estado, setEstado] = useState('ready')
   const [usuarios, setUsuarios] = useState(null)
@@ -19,7 +20,7 @@ export const App = () => {
     setUsuarios(conceptos.map(concepto => Object.keys(concepto.permisos))
       .reduce((current, prev) => {
         current.forEach(value => {
-          if(!prev.includes(value)){
+          if (!prev.includes(value)) {
             prev.push(value)
           }
         })
@@ -29,7 +30,7 @@ export const App = () => {
 
   const onElementsParsed = async (elements) => {
     cargarAplicativo(elements, setConceptos, setUsuarios)
-    const temp = Number.parseInt(Math.random()*5000)
+    const temp = Number.parseInt(Math.random() * 5000)
     setCodigo(temp)
     guardarAplicativo(elements, temp)
     setEstado('login')
@@ -41,7 +42,7 @@ export const App = () => {
   }
 
   useEffect(() => {
-    if(estado === 'ready'){
+    if (estado === 'ready') {
       const codigo = document.location.toString().split('/')[3]
       if (codigo)
         obtenerAplicativo(codigo)
@@ -52,13 +53,13 @@ export const App = () => {
             cargarAplicativo(elements, setConceptos, setUsuarios);
             setEstado('login');
           })
-          .catch(()=> setEstado('subirDiagrama'))
+          .catch(() => setEstado('subirDiagrama'))
       else
         setEstado('subirDiagrama')
     }
   })
 
-  switch (estado){
+  switch (estado) {
     case 'ready':
       return <></>
     case "login":
@@ -66,13 +67,13 @@ export const App = () => {
       return <Login setEstadoPadre={setEstado} usuarios={usuarios} enUsuarioSeleccionado={onUsuarioSelected} codigo={codigo} />
     case 'subirDiagrama':
       // if(conceptos){setEstado('login');break;}
-      return <UploadFile onElementsParsed = {onElementsParsed}/>
+      return <UploadFile onElementsParsed={onElementsParsed} />
     case 'conceptos':
       return <Conceptos setConcepto={setConcepto} conceptos={conceptos} usuario={usuario} setEstado={setEstado} />
     case 'insertarConcepto':
       return <InsertarConcepto campos={concepto.tiene} nombre={concepto.concepto} setEstadoPadre={setEstado} />
     case 'verConcepto':
-      return <VerConcepto nombre={concepto.concepto} setEstadoPadre={setEstado}/>
+      return <VerConcepto nombre={concepto.concepto} setEstadoPadre={setEstado} />
     default:
       return <div>error estado '{estado}' no valido</div>
   }

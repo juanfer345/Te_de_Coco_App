@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const InputInformacion = ({campo, enCampoCambiado}) => {
+export const InputInformacion = ({ campo, enCampoCambiado }) => {
 
   return (
     <div className='row'>

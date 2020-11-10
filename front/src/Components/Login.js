@@ -1,9 +1,8 @@
 import React from 'react'
 
+export const Login = ({ usuarios, enUsuarioSeleccionado, codigo }) => {
 
-export const Login = ({usuarios, enUsuarioSeleccionado, codigo}) => {
-
-  const Usuario = ({nombre}) => {
+  const Usuario = ({ nombre }) => {
     return (
       <div className='col-6 justify-content-center d-flex p-5'>
         <div className='card w-100 h-100' >
@@ -14,7 +13,7 @@ export const Login = ({usuarios, enUsuarioSeleccionado, codigo}) => {
             <div
               type='button'
               className='btn btn-primary'
-              onClick={(event)=> {
+              onClick={(event) => {
                 event.preventDefault()
                 enUsuarioSeleccionado(nombre)
               }}
@@ -29,7 +28,7 @@ export const Login = ({usuarios, enUsuarioSeleccionado, codigo}) => {
     )
   }
 
-  const Page = ({body}) => {
+  const Page = ({ body }) => {
     return (
       <div className='bg-dark'>
         <div className='container'>
@@ -42,15 +41,15 @@ export const Login = ({usuarios, enUsuarioSeleccionado, codigo}) => {
   }
 
   const linkCompartir = () => {
-    if(codigo){
+    if (codigo) {
       return document.location.toString() + codigo
     } else {
       return document.location.toString()
     }
   }
 
-  if(usuarios){
-    return  <Page body={
+  if (usuarios) {
+    return <Page body={
       <>
         <div className='col-12 bg-light card'>
           Link para compartir:
@@ -59,7 +58,7 @@ export const Login = ({usuarios, enUsuarioSeleccionado, codigo}) => {
           </a>
         </div>
 
-        {usuarios.map(usuairo => <Usuario nombre={usuairo} /> )}
+        {usuarios.map(usuairo => <Usuario nombre={usuairo} />)}
       </>
     } />
   } else {

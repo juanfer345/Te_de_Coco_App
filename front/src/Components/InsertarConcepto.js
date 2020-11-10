@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
-import {guardarConcepto} from "../Util/Conexion";
-import {InputInformacion} from "./InputInformacion";
+import React, { useState } from 'react'
+import { guardarConcepto } from "../Util/Conexion";
+import { InputInformacion } from "./InputInformacion";
 
-export const InsertarConcepto = ({campos, nombre, setEstadoPadre}) => {
+export const InsertarConcepto = ({ campos, nombre, setEstadoPadre }) => {
   let [informacion, setInformacion] = useState({})
   const [mensaje, setMensaje] = useState('')
 
@@ -14,11 +14,9 @@ export const InsertarConcepto = ({campos, nombre, setEstadoPadre}) => {
 
   const camposInput = campos.map(campo => <
     InputInformacion
-      campo={campo}
-      enCampoCambiado={enCampoCambiado}
+    campo={campo}
+    enCampoCambiado={enCampoCambiado}
   />)
-
-
 
   return (
     <div className='container'>
@@ -36,14 +34,14 @@ export const InsertarConcepto = ({campos, nombre, setEstadoPadre}) => {
       </div>
       {camposInput}
       <a className='btn btn-primary mr-5'
-           onClick={event => {
-             event.preventDefault()
-             setMensaje('Cargando...')
-             guardarConcepto(informacion, nombre)
-               .then(() => setMensaje('Guardado'))
-               .catch(() => setMensaje('Error al guardar'))
-           }
-         }
+        onClick={event => {
+          event.preventDefault()
+          setMensaje('Cargando...')
+          guardarConcepto(informacion, nombre)
+            .then(() => setMensaje('Guardado'))
+            .catch(() => setMensaje('Error al guardar'))
+        }
+        }
       >Guardar Informacion</a>
       {mensaje}
     </div>

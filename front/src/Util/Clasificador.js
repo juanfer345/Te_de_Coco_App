@@ -35,26 +35,9 @@ export const classifyElements = async (parsedXML) => {
       parsedXML = parsedXML.mxfile.diagram[0].mxGraphModel[0].root[0].mxCell;
 
       parsedXML.forEach(obj => {
-        if (obj.$.id == 0 || obj.$.id == 1) { // HAY QUE TENER CUIDADO AQUI, SI NO SE DESCARGA EL ESQUEMA CON SELECCIÓN, DA CON ERRORES
+        if (obj.$.style == undefined) { // HAY QUE TENER CUIDADO AQUI, SI NO SE DESCARGA EL ESQUEMA CON SELECCIÓN, DA CON ERRORES (obj.$.id == 0 || obj.$.id == 1)
           return null;
         }
-        else if (regexActor.test(obj.$.style)) {
-          parsedXML[obj.$.id].$.style = 'actor';
-          // console.log("Se encontro un actor", obj.$.value);
-        }
-        else if (regexRelDinamic.test(obj.$.style)) {
-          parsedXML[obj.$.id].$.style = 'relDinamica';
-          //console.log("Se encontro una relacion dinamica",obj.$); 
-        }
-        else if (regexConcepto.test(obj.$.style)) {
-          parsedXML[obj.$.id].$.style = 'concepto';
-          //console.log("Se encontro un concepto",obj.$); 
-        }
-        else if (regexRelEstruct.test(obj.$.style)) {
-          parsedXML[obj.$.id].$.style = 'relEstructural';
-          //console.log("Se encontro una relacion estructural",obj.$);
-        }
-
         else if (regexRelaciones.test(obj.$.style)) {
           var source = obj.$.source;
           var target = obj.$.target;
@@ -62,8 +45,34 @@ export const classifyElements = async (parsedXML) => {
           i++;
         }
         else {
-          alert('Se detecto un elemento desconocido: ' + obj.$.value);
+          var estail;
+          if (regexActor.test(obj.$.style)) {
+            estail = 'actor';
+            // console.log("Se encontro un actor", obj.$.value);
+          }
+          else if (regexRelDinamic.test(obj.$.style)) {
+            estail = 'relDinamica';
+            //console.log("Se encontro una relacion dinamica",obj.$); 
+          }
+          else if (regexConcepto.test(obj.$.style)) {
+            estail = 'concepto';
+            //console.log("Se encontro un concepto",obj.$); 
+          }
+          else if (regexRelEstruct.test(obj.$.style)) {
+            estail = 'relEstructural';
+            //console.log("Se encontro una relacion estructural",obj.$);
+          }
+          else {
+            alert('Se detecto un elemento desconocido: ' + obj.$.value);
+          }
 
+          var aidi = parsedXML.find(
+            (elemento) => {
+              if (elemento.$.id == obj.$.id) {
+                elemento.$.style = estail;
+              }
+            }
+          );
         }
       });
 
@@ -73,6 +82,18 @@ export const classifyElements = async (parsedXML) => {
       relaciones.forEach(rel => {
         var idSource = rel.sourc;
         var idTarget = rel.targ;
+
+        for (var [key, value] of Object.entries(parsedXML)) {
+          if (value.$.id == idSource) {
+            idSource = key;
+          }
+        }
+
+        for (var [key, value] of Object.entries(parsedXML)) {
+          if (value.$.id == idTarget) {
+            idTarget = key;
+          }
+        }
 
         // Identificación de conceptos padre
         if (parsedXML[idTarget].$.style == 'relEstructural' && parsedXML[idSource].$.style == 'concepto') {
@@ -152,12 +173,10 @@ export const classifyElements = async (parsedXML) => {
           obj.permisos[key] = value.split(",");
         }
       });
-
       resolve(conceptosPadre);
-
     }
     else {
-      reject('Error parsing XML')
+      reject('Error parsing XML');
     }
 
   }))

@@ -1,8 +1,8 @@
 import React from 'react'
 
-export const Conceptos = ({conceptos, usuario, setEstado, setConcepto}) => {
+export const Conceptos = ({ conceptos, usuario, setEstado, setConcepto }) => {
   const navegarA = (estado, concepto) => {
-    switch (estado){
+    switch (estado) {
       case 'insertarConcepto':
         setConcepto(concepto)
         setEstado('insertarConcepto')
@@ -11,17 +11,16 @@ export const Conceptos = ({conceptos, usuario, setEstado, setConcepto}) => {
         setConcepto(concepto)
         setEstado('verConcepto')
         break;
-
     }
   }
 
-  const Boton = ({concepto, label, usuario, onClick}) => {
+  const Boton = ({ concepto, label, usuario, onClick }) => {
     console.log(concepto.permisos)
     console.log(usuario)
-    if(concepto.permisos[usuario]?.includes(label)){
-      return(
+    if (concepto.permisos[usuario]?.includes(label)) {
+      return (
         <div className={`btn btn-primary`}
-           onClick={onClick}
+          onClick={onClick}
         >
           {label}
         </div>
@@ -29,7 +28,7 @@ export const Conceptos = ({conceptos, usuario, setEstado, setConcepto}) => {
     } else {
       return (
         <button className={`btn btn-primary`}
-             disabled
+          disabled
         >
           {label}
         </button>
@@ -37,17 +36,17 @@ export const Conceptos = ({conceptos, usuario, setEstado, setConcepto}) => {
     }
   }
 
-  const Concepto = ({concepto, usuario}) => {
-    const properties = [{name:'Insertar', action:'insertarConcepto'},
-      {name:'Actualizar', action:'insertarConcepto'},
-      {name:'Borrar', action:'insertarConcepto'},
-      {name:'Ver', action:'verConcepto'}]
+  const Concepto = ({ concepto, usuario }) => {
+    const properties = [{ name: 'Insertar', action: 'insertarConcepto' },
+    { name: 'Actualizar', action: 'insertarConcepto' },
+    { name: 'Borrar', action: 'insertarConcepto' },
+    { name: 'Ver', action: 'verConcepto' }]
 
     const buttons = properties.map(property => {
       return (
         <div className='col'>
           <Boton
-            onClick={(event) => {navegarA(property.action, concepto)}}
+            onClick={(event) => { navegarA(property.action, concepto) }}
             concepto={concepto}
             usuario={usuario}
             label={property.name}
@@ -73,10 +72,10 @@ export const Conceptos = ({conceptos, usuario, setEstado, setConcepto}) => {
         Conceptos
       </div>
       {conceptos.map((concepto) => {
-        return(
-          <Concepto concepto={concepto} usuario={usuario}/>
+        return (
+          <Concepto concepto={concepto} usuario={usuario} />
         )
-        })
+      })
       }
     </div>
   )

@@ -1,16 +1,16 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
-export const InputComida = ({nombre, enCampoCambiado, numeroFormulario}) => {
+export const InputComida = ({ nombre, enCampoCambiado, numeroFormulario }) => {
   let [formularioActual, setFormularioActual] = useState(numeroFormulario)
   let [valor, setValor] = useState('')
 
-  const enValorCambiado = ( event ) => {
+  const enValorCambiado = (event) => {
     event.preventDefault();
     setValor(event.target.value)
     enCampoCambiado(nombre, event.target.value)
   }
 
-  if (numeroFormulario !== formularioActual){
+  if (numeroFormulario !== formularioActual) {
     setValor('')
     setFormularioActual(numeroFormulario)
   }

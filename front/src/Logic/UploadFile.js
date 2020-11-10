@@ -1,8 +1,8 @@
 import React from 'react';
-import {classifyElements} from "../Util/Clasificador";
+import { classifyElements } from "../Util/Clasificador";
 const parseXml2Json = require('xml2js').parseString;
 
-export const UploadFile = ({onElementsParsed}) => {
+export const UploadFile = ({ onElementsParsed }) => {
   const fileReader = new FileReader();
 
   const onFileChange = async (e) => {
@@ -13,10 +13,10 @@ export const UploadFile = ({onElementsParsed}) => {
       const uploadedFile = e.target.result;
       parseXml2Json(uploadedFile, (e, result) => {
 
-        if (e) {console.log(e.message); return;}
+        if (e) { console.log(e.message); return; }
         classifyElements(result)
           .then((result) => onElementsParsed(result))
-          .catch((e) => {})
+          .catch((e) => { })
       })
     }
     fileReader.readAsText(e.target.files[0]);
