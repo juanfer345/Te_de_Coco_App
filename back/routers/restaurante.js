@@ -9,7 +9,7 @@ router.get('/home',RestauranteController.home);
 
 //Metodos insertar objectos en la BD
 router.post('/saveProduct',RestauranteController.saveProduct);
-router.get('/product/:id?/:value?',RestauranteController.getProduct);	//Parametro opcional
+router.get('/product/:id?/:value?/:codigo?',RestauranteController.getProduct);	//Parametro opcional
 router.get('/products',RestauranteController.getProducts);
 router.put('/product/:id?/:value?',RestauranteController.updateProduct);
 router.delete('/product/:id?/:value?',RestauranteController.deleteProduct);	

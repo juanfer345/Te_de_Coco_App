@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { guardarConcepto } from "../Util/Conexion";
+import {actualizarConcepto, guardarConcepto} from "../Util/Conexion";
 import { InputInformacion } from "./InputInformacion";
 
-export const InsertarConcepto = ({ campos, nombre, setEstadoPadre }) => {
+export const InsertarConcepto = ({ campos, nombre, setEstadoPadre, codigo, estadoPadre, id}) => {
   let [informacion, setInformacion] = useState({})
   const [mensaje, setMensaje] = useState('')
 
@@ -37,9 +37,15 @@ export const InsertarConcepto = ({ campos, nombre, setEstadoPadre }) => {
         onClick={event => {
           event.preventDefault()
           setMensaje('Cargando...')
-          guardarConcepto(informacion, nombre)
-            .then(() => setMensaje('Guardado'))
-            .catch(() => setMensaje('Error al guardar'))
+          if(estadoPadre === 'insertarConcepto') {
+            guardarConcepto(informacion, nombre, codigo)
+              .then(() => setMensaje('Guardado'))
+              .catch(() => setMensaje('Error al guardar'))
+          } else if (estadoPadre === 'actualizarConcepto'){
+            actualizarConcepto(id,informacion)
+              .then(() => setMensaje('Guardado'))
+              .catch(() => setMensaje('Error al guardar'))
+          }
         }
         }
       >Guardar Informacion</a>

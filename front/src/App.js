@@ -5,6 +5,7 @@ import { Conceptos } from "./Components/Conceptos";
 import { InsertarConcepto } from "./Components/InsertarConcepto";
 import { VerConcepto } from "./Components/verConcepto";
 import { guardarAplicativo, obtenerAplicativo } from "./Util/Conexion";
+import {SeleccionarConcepto} from "./Components/SeleccionarConepto";
 
 export const App = () => {
   const [estado, setEstado] = useState('ready')
@@ -12,6 +13,7 @@ export const App = () => {
   const [usuario, setUsuario] = useState(null)
   const [concepto, setConcepto] = useState(null)
   const [conceptos, setConceptos] = useState(null)
+  const [conceptoSeleccionado, setConceptoSeleccionado] = useState(null)
   const [codigo, setCodigo] = useState(null)
 
   const cargarAplicativo = (conceptos, setConceptos, setUsuarios) => {
@@ -44,7 +46,8 @@ export const App = () => {
   useEffect(() => {
     if (estado === 'ready') {
       const codigo = document.location.toString().split('/')[3]
-      if (codigo)
+      if (codigo) {
+        setCodigo(codigo)
         obtenerAplicativo(codigo)
           .then(aplicativo => {
             let keys = Object.keys(aplicativo[0]).filter(key => Number.isInteger(parseInt(key)))
@@ -54,6 +57,7 @@ export const App = () => {
             setEstado('login');
           })
           .catch(() => setEstado('subirDiagrama'))
+      }
       else
         setEstado('subirDiagrama')
     }
@@ -63,7 +67,6 @@ export const App = () => {
     case 'ready':
       return <></>
     case "login":
-      //TODO usuarios son cargados desde la api si el aplicativo ya se ha creado
       return <Login setEstadoPadre={setEstado} usuarios={usuarios} enUsuarioSeleccionado={onUsuarioSelected} codigo={codigo} />
     case 'subirDiagrama':
       // if(conceptos){setEstado('login');break;}
@@ -71,9 +74,15 @@ export const App = () => {
     case 'conceptos':
       return <Conceptos setConcepto={setConcepto} conceptos={conceptos} usuario={usuario} setEstado={setEstado} />
     case 'insertarConcepto':
-      return <InsertarConcepto campos={concepto.tiene} nombre={concepto.concepto} setEstadoPadre={setEstado} />
+      return <InsertarConcepto codigo={codigo} campos={concepto.tiene} nombre={concepto.concepto} setEstadoPadre={setEstado}  estadoPadre={estado}/>
     case 'verConcepto':
-      return <VerConcepto nombre={concepto.concepto} setEstadoPadre={setEstado} />
+      return <VerConcepto codigo={codigo} nombre={concepto.concepto} setEstadoPadre={setEstado} />
+    case 'eliminarConcepto':
+      return <SeleccionarConcepto setEstadoPadre={setEstado} nombre={concepto.concepto} codigo={codigo} estadoPadre={estado}/>
+    case 'actualizarConceptoSeleccionar':
+      return <SeleccionarConcepto setEstadoPadre={setEstado} nombre={concepto.concepto} codigo={codigo} estadoPadre={estado} setConcepto={setConceptoSeleccionado}/>
+    case 'actualizarConcepto':
+      return <InsertarConcepto codigo={codigo} campos={concepto.tiene} nombre={concepto.concepto} setEstadoPadre={setEstado} estadoPadre={estado} id={conceptoSeleccionado} />
     default:
       return <div>error estado '{estado}' no valido</div>
   }

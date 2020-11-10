@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { obtenerConceptos } from "../Util/Conexion";
 
-export const VerConcepto = ({ nombre, setEstadoPadre }) => {
+export const VerConcepto = ({ nombre, setEstadoPadre, codigo }) => {
   const [datos, setDatos] = useState(null)
   const [estado, setEstado] = useState('listo')
 
   useEffect(() => {
     if (estado === 'listo') {
       setEstado('cargando')
-      obtenerConceptos(nombre)
+      obtenerConceptos(nombre, codigo)
         .then((respuesta) => { console.log(respuesta); setDatos(respuesta); setEstado('cargado') })
     }
   })

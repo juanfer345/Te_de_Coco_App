@@ -11,6 +11,16 @@ export const Conceptos = ({ conceptos, usuario, setEstado, setConcepto }) => {
         setConcepto(concepto)
         setEstado('verConcepto')
         break;
+      case 'login':
+        setEstado('login')
+        break;
+      case 'eliminarConcepto':
+        setConcepto(concepto)
+        setEstado('eliminarConcepto')
+        break;
+      case 'actualizarConceptoSeleccionar':
+        setConcepto(concepto)
+        setEstado('actualizarConceptoSeleccionar')
     }
   }
 
@@ -38,8 +48,8 @@ export const Conceptos = ({ conceptos, usuario, setEstado, setConcepto }) => {
 
   const Concepto = ({ concepto, usuario }) => {
     const properties = [{ name: 'Insertar', action: 'insertarConcepto' },
-    { name: 'Actualizar', action: 'insertarConcepto' },
-    { name: 'Borrar', action: 'insertarConcepto' },
+    { name: 'Actualizar', action: 'actualizarConceptoSeleccionar' },
+    { name: 'Borrar', action: 'eliminarConcepto' },
     { name: 'Ver', action: 'verConcepto' }]
 
     const buttons = properties.map(property => {
@@ -69,7 +79,18 @@ export const Conceptos = ({ conceptos, usuario, setEstado, setConcepto }) => {
   return (
     <div className='container p-5'>
       <div className='row h2'>
-        Conceptos
+        <div className='col-2'>
+          <div
+            className='btn btn-primary'
+            type='button'
+            onClick={()=>navegarA('login')}
+          >
+            Volver
+          </div>
+        </div>
+        <div >
+          Conceptos
+        </div>
       </div>
       {conceptos.map((concepto) => {
         return (

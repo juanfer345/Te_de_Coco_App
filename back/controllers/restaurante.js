@@ -56,6 +56,7 @@ var controller={
 		//Tupla clave valor a buscar
 		let query={};
 		query[productId]=productValue;
+		query['_codigo']=req.params.codigo;
 
 		if(!productId || !productValue){ 
 			return resp.status(404).send({message:'No se han pasado parametros de busqueda para: '+productId});
@@ -94,7 +95,7 @@ var controller={
 		}
 
 		var update= req.body;
-		Product.findOneAndUpdate(query, update,{new:true}, (error,ProductUpdate)=>{
+		Product.findOneAndUpdate(query, update,{new:false}, (error,ProductUpdate)=>{
 			if(error){
 				return resp.status(500).send({message:'Error al actualizar los datos'});
 			}

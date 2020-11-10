@@ -41,7 +41,7 @@ export const Login = ({ usuarios, enUsuarioSeleccionado, codigo }) => {
   }
 
   const linkCompartir = () => {
-    if (codigo) {
+    if (codigo && !document.location.toString().split('/')[3]) {
       return document.location.toString() + codigo
     } else {
       return document.location.toString()
