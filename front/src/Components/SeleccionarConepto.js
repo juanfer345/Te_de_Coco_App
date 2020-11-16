@@ -33,10 +33,10 @@ export const SeleccionarConcepto = ({nombre , codigo , setEstadoPadre, estadoPad
         onClick={()=>setConceptoSeleccionado(id)}
         type='button'
       >
-        {datos?.map(dato => {
-          return Object.getOwnPropertyNames(dato).map(propiedad =>
-            <Propiedad clave={propiedad} valor={dato[propiedad]} />)
-        })}
+        {
+          Object.getOwnPropertyNames(campos).map(propiedad =>
+            <Propiedad clave={propiedad} valor={campos[propiedad]} />)
+        }
       </div>
     )
   }

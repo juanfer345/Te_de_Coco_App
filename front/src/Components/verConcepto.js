@@ -15,7 +15,7 @@ export const VerConcepto = ({ nombre, setEstadoPadre, codigo }) => {
 
   const Propiedad = ({ clave, valor }) => {
     return (
-      <div className='col-12'>
+      <div className=' col-4'>
         <span className='font-weight-bolder'>
           {clave}:
         </span>
@@ -34,10 +34,17 @@ export const VerConcepto = ({ nombre, setEstadoPadre, codigo }) => {
         <div className='h3'>
           Valores en concepto {nombre}
         </div>
-        {datos?.map(dato => {
-          return Object.getOwnPropertyNames(dato).map(propiedad =>
-            <Propiedad clave={propiedad} valor={dato[propiedad]} />)
-        })}
+        <div className='row'>
+
+          {datos?.map(dato => {
+            return <div className='card col-6 pb-2'>
+              {Object.getOwnPropertyNames(dato).map(propiedad =>
+              <Propiedad clave={propiedad} valor={dato[propiedad]} />)}
+            </div>
+          })}
+
+        </div>
+
         <button
           className='btn btn-primary'
           onClick={() => { setEstadoPadre('conceptos') }}
