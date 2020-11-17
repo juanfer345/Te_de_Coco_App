@@ -14,6 +14,7 @@ export const VerConcepto = ({ nombre, setEstadoPadre, codigo }) => {
   })
 
   const Propiedad = ({ clave, valor }) => {
+    if(clave === '_id' || clave === 'concepto' || clave === '_codigo' || clave === '__v') return <></>
     return (
       <div className=' col-4'>
         <span className='font-weight-bolder'>
