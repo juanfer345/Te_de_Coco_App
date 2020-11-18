@@ -24,4 +24,5 @@ Instalar Node
 
 Para acceder al Chatbot lo puede hacer mediante el link publico: 
 https://colab.research.google.com/drive/1xTQm1yVvKoG67yzvobsEkSYro0TEpDLI?usp=sharing
+
 Nota: Debe copiar el index.html de la carpeta ChatBot a el archivo index.html de la carpeta templates del colab, que esta vacio por defecto.
